@@ -11,6 +11,7 @@ Steps :
 - Download the latest version of WhereAreU
 - Extract the WhereAreU.exe file into your League of Legends folder (not the Riot Client folder, the default is: C:\Riot GamesLeague of Legends)
 - Create a shortcut to WhereAreU.exe on your desktop
+- Ajouter R3nzSkin.exe, R3nzSkin.dll et le dossier Riot Games à votre liste d'exceptions de votre antivirus, sinon votre antivirus risque de supprimer R3nzSkin.exe et R3nzSkin.dll
 - Launch the shortcut
 - Enjoy!
 </div>
