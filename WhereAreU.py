@@ -172,7 +172,7 @@ def run_as_admin():
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, "WhereAreU.py", None, 1)
             sys.exit()
         except Exception as e:
-            print(f"Erreur lors de l'élévation des privilèges : {e}")
+            print(f"Error when elevating privileges : {e}")
             sys.exit()
 
 if not is_admin():
