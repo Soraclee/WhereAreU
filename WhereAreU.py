@@ -3,15 +3,58 @@ import requests
 import sys
 import zipfile
 import win32com.client
+import json
 from subprocess import call
 
 # Définir le nom du référentiel
 repo_owner = "R3nzTheCodeGOD"
 repo_name = "R3nzSkin"
+settings_file = "settings_wau.json"
+settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True }
+
+def checkSettings():
+    if os.path.exists(settings_file):
+        with open(settings_file, "r") as f:
+            settings = json.load(f)
+            first_time = settings["first_time"]
+            if first_time == True:
+                lol_directory_preference = input("Please enter your League of Legends installation folder (default: C:\\Riot Games\\League of Legends) : ")
+
+                if(lol_directory_preference != ""):
+                    settings_json_default["lol_directory"] = lol_directory_preference
+                    settings_json_default["first_time"] = False
+                    with open(settings_file, "w") as f:
+                        json.dump(settings_json_default, f)
+                else:
+                    settings_json_default["first_time"] = False
+                    with open(settings_file, "w") as f:
+                        json.dump(settings_json_default, f)
+    else:
+        print(f"Le fichier '{settings_file}' n'existe pas.")
+        print("Création du fichier...")
+        with open(settings_file, "w") as f:
+            json.dump(settings_json_default, f)
+        print(f"Le fichier '{settings_file}' a été créé.")
+        lol_directory_preference = input("Please enter your League of Legends installation folder (default: C:\\Riot Games\\League of Legends) : ")
+
+        if(lol_directory_preference != ""):
+            settings_json_default["lol_directory"] = lol_directory_preference
+            settings_json_default["first_time"] = False
+            with open(settings_file, "w") as f:
+                json.dump(settings_json_default, f)
+        else:
+            settings_json_default["first_time"] = False
+            with open(settings_file, "w") as f:
+                json.dump(settings_json_default, f)
+
+checkSettings()
 
 # Définir le chemin du dossier League of Legends
 lol_directory = "C:\\Riot Games\\League of Legends"
 
+with open(settings_file, "r") as f:
+    settings_json = json.load(f)
+    lol_directory = settings_json["lol_directory"]
 
 def find_file_by_description(description):
     shell = win32com.client.Dispatch("Shell.Application")
@@ -22,6 +65,9 @@ def find_file_by_description(description):
     return None
 
 def exec_script():
+
+    print(f"Le chemin du dossier League of Legends est : {lol_directory}")
+
     # Créer une session pour éviter les limites de taux d'API GitHub
     session = requests.Session()
     session.headers.update({
