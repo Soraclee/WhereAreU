@@ -7,4 +7,10 @@ WhereAreU is a simple program that checks whether R3nzSkin is still available an
 
 Why did we make this program? Simply because R3nzSkin isn't always available and I don't feel like downloading it manually every time. What's more, there's no automatic update system. So this program is there to make up for these problems.
 
+Steps :
+- Download the latest version of WhereAreU
+- Extract the WhereAreU.exe file into your League of Legends folder (not the Riot Client folder, the default is: C:\Riot GamesLeague of Legends)
+- Create a shortcut to WhereAreU.exe on your desktop
+- Launch the shortcut
+- Enjoy!
 </div>

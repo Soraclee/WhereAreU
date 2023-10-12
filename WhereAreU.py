@@ -20,36 +20,61 @@ def main():
                 settings = json.load(f)
                 first_time = settings["first_time"]
                 if first_time == True:
-                    lol_directory_preference = input("Please enter your League of Legends installation folder (default: C:\\Riot Games\\League of Legends) : ")
+                    current_directory = os.getcwd()
 
-                    if(lol_directory_preference != ""):
-                        settings_json_default["lol_directory"] = lol_directory_preference
-                        settings_json_default["first_time"] = False
-                        with open(settings_file, "w") as f:
-                            json.dump(settings_json_default, f)
-                    else:
-                        settings_json_default["first_time"] = False
-                        with open(settings_file, "w") as f:
-                            json.dump(settings_json_default, f)
+                    settings_json_default["lol_directory"] = current_directory
+                    settings_json_default["first_time"] = False
+                    with open(settings_file, "w") as f:
+                        json.dump(settings_json_default, f)
+
         else:
             print(f"Le fichier '{settings_file}' n'existe pas.")
             print("Création du fichier...")
             with open(settings_file, "w") as f:
                 json.dump(settings_json_default, f)
             print(f"Le fichier '{settings_file}' a été créé.")
-            lol_directory_preference = input("Please enter your League of Legends installation folder (default: C:\\Riot Games\\League of Legends) : ")
+            current_directory = os.getcwd()
 
-            if(lol_directory_preference != ""):
-                settings_json_default["lol_directory"] = lol_directory_preference
-                settings_json_default["first_time"] = False
-                with open(settings_file, "w") as f:
-                    json.dump(settings_json_default, f)
-            else:
-                settings_json_default["first_time"] = False
-                with open(settings_file, "w") as f:
-                    json.dump(settings_json_default, f)
+            settings_json_default["lol_directory"] = current_directory
+            settings_json_default["first_time"] = False
+            with open(settings_file, "w") as f:
+                json.dump(settings_json_default, f)
+
 
     checkSettings()
+
+    def checkVersionR3nSkin():
+        # Créer une session pour éviter les limites de taux d'API GitHub
+        session = requests.Session()
+        session.headers.update({
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "WhereAreU-GitHub"
+        })
+
+        # Obtenir les informations de la dernière version du référentiel
+        release_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
+        response = session.get(release_url)
+        print("Search for the latest script version...")
+        if response.status_code == 200:
+            release_info = response.json()
+            version_app = release_info['tag_name'];
+        
+            with open(settings_file, "r") as f:
+                settings_json = json.load(f)
+                version_settings = settings_json.get("version")
+                
+                if version_settings != version_app:
+                    settings_json["version"] = version_app
+                    with open(settings_file, "w") as f:
+                        # Modifier la version dans settings_wau.json
+                        json.dump(settings_json, f)
+                    return True
+        
+            
+        else:
+            print("Unable to retrieve information from the latest version.")
+        
+        return False
 
     # Définir le chemin du dossier League of Legends
     lol_directory = "C:\\Riot Games\\League of Legends"
@@ -83,6 +108,9 @@ def main():
         print("Search for the latest script version...")
         if response.status_code == 200:
             release_info = response.json()
+            
+            checkVersionR3nSkin()
+            
             assets = release_info.get("assets", [])
             print("Retrieving information from the latest version...")
 
@@ -145,38 +173,6 @@ def main():
         else:
             print(f"The file '{description_to_find}' was not found.")
             sys.exit()
-
-    def checkVersionR3nSkin():
-        # Créer une session pour éviter les limites de taux d'API GitHub
-        session = requests.Session()
-        session.headers.update({
-            "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "WhereAreU-GitHub"
-        })
-
-        # Obtenir les informations de la dernière version du référentiel
-        release_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
-        response = session.get(release_url)
-        print("Search for the latest script version...")
-        if response.status_code == 200:
-            release_info = response.json()
-            version_app = release_info['tag_name'];
-        
-            # Comparer la version de l'application avec la version dans settings_wau.json
-
-            with open(settings_file, "r") as f:
-                settings_json = json.load(f)
-                version_app_settings = settings_json["version"]
-
-                if version_app_settings != version_app:
-                    settings_json["version"] = version_app
-                    return True
-                else:
-                    return False
-        else:
-            print("Unable to retrieve information from the latest version.")
-        
-        return False
 
     description_to_find = "R3nSkin DLL Injector"
     found_file = find_file_by_description(description_to_find)
