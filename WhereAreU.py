@@ -12,7 +12,7 @@ def main():
     repo_owner = "R3nzTheCodeGOD"
     repo_name = "R3nzSkin"
     settings_file = "settings_wau.json"
-    settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True }
+    settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True, "version": "1.0.0" }
 
     def checkSettings():
         if os.path.exists(settings_file):
@@ -146,6 +146,38 @@ def main():
             print(f"The file '{description_to_find}' was not found.")
             sys.exit()
 
+    def checkVersionR3nSkin():
+        # Créer une session pour éviter les limites de taux d'API GitHub
+        session = requests.Session()
+        session.headers.update({
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "WhereAreU-GitHub"
+        })
+
+        # Obtenir les informations de la dernière version du référentiel
+        release_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
+        response = session.get(release_url)
+        print("Search for the latest script version...")
+        if response.status_code == 200:
+            release_info = response.json()
+            version_app = release_info['tag_name'];
+        
+            # Comparer la version de l'application avec la version dans settings_wau.json
+
+            with open(settings_file, "r") as f:
+                settings_json = json.load(f)
+                version_app_settings = settings_json["version"]
+
+                if version_app_settings != version_app:
+                    settings_json["version"] = version_app
+                    return True
+                else:
+                    return False
+        else:
+            print("Unable to retrieve information from the latest version.")
+        
+        return False
+
     description_to_find = "R3nSkin DLL Injector"
     found_file = find_file_by_description(description_to_find)
 
@@ -156,9 +188,19 @@ def main():
         sys.exit()
     else:
         # Les fichiers existent
-        openGoodFile()
-        print("Close script...")
-        sys.exit()
+        # Vérifier si la version de l'application est différente de la version dans settings_wau.json
+        if checkVersionR3nSkin():
+            # La version de l'application est différente de la version dans settings_wau.json
+            # Exécutez le script
+            exec_script()
+            print("Close script...")
+            sys.exit()
+        else:
+            # La version de l'application est la même que la version dans settings_wau.json
+            # Ouvrez le fichier R3nSkin DLL Injector
+            openGoodFile()
+            print("Close script...")
+            sys.exit()
 
 def is_admin():
     try:
