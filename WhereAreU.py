@@ -66,7 +66,7 @@ def find_file_by_description(description):
 
 def exec_script():
 
-    print(f"Le chemin du dossier League of Legends est : {lol_directory}")
+    print(f"The path to the League of Legends folder is : {lol_directory}")
 
     # Créer une session pour éviter les limites de taux d'API GitHub
     session = requests.Session()
@@ -78,16 +78,16 @@ def exec_script():
     # Obtenir les informations de la dernière version du référentiel
     release_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
     response = session.get(release_url)
-    print("Recherche de la dernière version du script...")
+    print("Search for the latest script version...")
     if response.status_code == 200:
         release_info = response.json()
         assets = release_info.get("assets", [])
-        print("Récupération des informations de la dernière version...")
+        print("Retrieving information from the latest version...")
 
         if assets:
             # Trouvez le fichier d'actif avec le bon nom (par exemple, "R3nzSkin.zip")
             asset = next((a for a in assets if a["name"] == "R3nzSkin.zip"), None)
-            print("Récupération du dossier R3nzSkin.zip...")
+            print("R3nzSkin.zip folder recovery...")
 
             if asset:
                 download_url = asset["browser_download_url"]
@@ -95,31 +95,31 @@ def exec_script():
                 # Téléchargez le fichier zip
                 download_path = "temp.zip"
                 response = session.get(download_url)
-                print("Téléchargement du dossier R3nzSkin.zip...")
+                print("Download R3nzSkin.zip folder...")
 
                 if response.status_code == 200:
                     with open(download_path, 'wb') as f:
                         f.write(response.content)
-                    print("Ouverture du dossier R3nzSkin.zip...")
+                    print("Open folder R3nzSkin.zip...")
                     # Extrayez les fichiers zip dans le dossier League of Legends
                     with zipfile.ZipFile(download_path, 'r') as zip_ref:
                         zip_ref.extractall(lol_directory)
-                        print("Extraction du dossier R3nzSkin.zip...")
+                        print("R3nzSkin.zip folder extraction...")
 
                     # Supprimez le fichier zip temporaire
                     os.remove(download_path)
-                    print("Suppression du dossier R3nzSkin.zip...")
+                    print("Delete folder R3nzSkin.zip...")
 
                     openGoodFile()
-                    print("Ouverture du fichier R3nSkin DLL Injector...")
+                    print("Opening the R3nSkin DLL Injector file...")
                 else:
-                    print("Impossible de télécharger le fichier depuis GitHub.")
+                    print("Unable to download file from GitHub.")
             else:
-                print("Fichier d'actif introuvable dans les actifs de la dernière version.")
+                print("Asset file not found in latest version assets.")
         else:
-            print("Aucun actif trouvé dans la dernière version.")
+            print("No assets found in the latest version.")
     else:
-        print("Impossible de récupérer les informations de la dernière version.")
+        print("Unable to retrieve information from the latest version.")
 
 def openGoodFile():
     # Recherche du fichier par description (par exemple, "R3nzSkin_Injector.exe")
@@ -127,10 +127,11 @@ def openGoodFile():
     found_file = find_file_by_description(description_to_find)
 
     if found_file:
-        print(f"Le fichier '{description_to_find}' a été trouvé : {found_file}")
+        print(f"The file '{description_to_find}' has been found: {found_file}")
         call([found_file])
+        print("Opening the R3nSkin DLL Injector file...")
     else:
-        print(f"Le fichier '{description_to_find}' n'a pas été trouvé.")
+        print(f"The file '{description_to_find}' was not found.")
 
 description_to_find = "R3nSkin DLL Injector"
 found_file = find_file_by_description(description_to_find)
@@ -138,8 +139,10 @@ found_file = find_file_by_description(description_to_find)
 if not found_file:
     # Les fichiers n'existent pas, exécutez le script
     exec_script()
+    print("Close script...")
     sys.exit()
 else:
     # Les fichiers existent, ouvrez scriptLOL.exe
     openGoodFile()
+    print("Close script...")
     sys.exit()
