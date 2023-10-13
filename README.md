@@ -1,4 +1,7 @@
 <div align="center">
+<img src="https://img.shields.io/badge/Language-Python-green" />
+<img src="https://img.shields.io/badge/Game-League_of_Legends-6373ce" />
+<img src="https://img.shields.io/badge/Platform-Windows-blue" />
 
 # **WhereAreU**
 ## **Always have R3nzSkin available**
@@ -9,7 +12,7 @@ Why did we make this program? Simply because R3nzSkin isn't always available and
 </div>
 
 Steps :
-- Download the latest version of WhereAreU
+- Download the latest version of [WhereAreU](https://github.com/Soraclee/WhereAreU/releases/latest)
 - Extract the WhereAreU.exe file into your League of Legends folder (not the Riot Client folder, the default is: C:\Riot GamesLeague of Legends)
 - Create a shortcut to WhereAreU.exe on your desktop
 - Ajouter R3nzSkin.exe, R3nzSkin.dll et le dossier Riot Games à votre liste d'exceptions de votre antivirus, sinon votre antivirus risque de supprimer R3nzSkin.exe et R3nzSkin.dll

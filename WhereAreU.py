@@ -40,7 +40,6 @@ def main():
             with open(settings_file, "w") as f:
                 json.dump(settings_json_default, f)
 
-
     checkSettings()
 
     def checkVersionR3nSkin():
