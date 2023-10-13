@@ -6,6 +6,8 @@ import win32com.client
 import json
 import subprocess
 import ctypes
+import psutil
+import time
 
 def main():
     # Définir le nom du référentiel
@@ -14,13 +16,44 @@ def main():
     settings_file = "settings_wau.json"
     settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True, "version": "1.0.0" }
 
+    def find_league_of_legends_on_all_disks():
+        def get_all_disks():
+            disques = []
+            partitions = psutil.disk_partitions(all=False)
+            for partition in partitions:
+                disques.append(partition.device)
+            return disques
+        
+        user_preference = input("Do you want to search for the 'League of Legends' folder on all disks automatically? (This technique may take some time - 2~3min) (Y/N) : ")
+
+        if user_preference == "O" or user_preference == "o" or user_preference == "":
+            available_disks = get_all_disks()
+            for disque in available_disks:
+                print("Search for the 'League of Legends' folder from 'Riot Games' on disk : " + disque)
+                if os.path.exists(disque):
+                    for dossier_racine, sous_repertoires, fichiers in os.walk(disque):
+                        if "Riot Games" in sous_repertoires:
+                            chemin_riot_games = os.path.join(dossier_racine, "Riot Games")
+                            dossier_league_of_legends = os.path.join(chemin_riot_games, "League of Legends")
+                            if os.path.exists(dossier_league_of_legends):
+                                return dossier_league_of_legends
+        else:
+            path_lol = input("Please enter the path to the 'League of Legends' folder : ")
+
+            if os.path.exists(path_lol):
+                return path_lol
+            else:
+                print("The specified path does not exist.")
+                sys.exit()
+
     def checkSettings():
         if os.path.exists(settings_file):
             with open(settings_file, "r") as f:
                 settings = json.load(f)
                 first_time = settings["first_time"]
                 if first_time == True:
-                    current_directory = os.getcwd()
+                    league_of_legends_path = find_league_of_legends_on_all_disks()
+                    current_directory = league_of_legends_path
 
                     settings_json_default["lol_directory"] = current_directory
                     settings_json_default["first_time"] = False
@@ -28,12 +61,13 @@ def main():
                         json.dump(settings_json_default, f)
 
         else:
-            print(f"Le fichier '{settings_file}' n'existe pas.")
-            print("Création du fichier...")
+            print(f"The file '{settings_file}' does not exist.")
+            print("File creation...")
             with open(settings_file, "w") as f:
                 json.dump(settings_json_default, f)
-            print(f"Le fichier '{settings_file}' a été créé.")
-            current_directory = os.getcwd()
+            print(f"The file '{settings_file}' has been created.")
+            league_of_legends_path = find_league_of_legends_on_all_disks()
+            current_directory = league_of_legends_path
 
             settings_json_default["lol_directory"] = current_directory
             settings_json_default["first_time"] = False
@@ -61,11 +95,13 @@ def main():
             with open(settings_file, "r") as f:
                 settings_json = json.load(f)
                 version_settings = settings_json.get("version")
+                print("Get version in settings_wau.json")
                 
                 if version_settings != version_app:
                     settings_json["version"] = version_app
                     with open(settings_file, "w") as f:
                         # Modifier la version dans settings_wau.json
+                        print("Change version in settings_wau.json by the new version")
                         json.dump(settings_json, f)
                     return True
         
@@ -81,13 +117,13 @@ def main():
     with open(settings_file, "r") as f:
         settings_json = json.load(f)
         lol_directory = settings_json["lol_directory"]
-
-    def find_file_by_description(description):
+    
+    def find_file_by_description(description, folder_path):
         shell = win32com.client.Dispatch("Shell.Application")
-        folder = shell.NameSpace(lol_directory)  # Remplacez par votre chemin
+        folder = shell.NameSpace(folder_path)
         for item in folder.Items():
             if item.Type == "Application" and item.ExtendedProperty("System.FileDescription") == description:
-                return os.path.join(lol_directory, item.Name)
+                return os.path.join(folder_path, item.Name)
         return None
 
     def exec_script():
@@ -162,11 +198,11 @@ def main():
     def openGoodFile():
         # Recherche du fichier par description (par exemple, "R3nzSkin_Injector.exe")
         description_to_find = "R3nSkin DLL Injector"
-        found_file = find_file_by_description(description_to_find)
+        found_file = find_file_by_description(description_to_find, lol_directory)
 
         if found_file:
             print(f"The file '{description_to_find}' has been found: {found_file}")
-            os.system(f'start "" "{found_file}"')
+            os.system(f'start /D "{lol_directory}" "" "{found_file}"')
             print("Opening the R3nSkin DLL Injector file...")
             sys.exit()
         else:
@@ -174,7 +210,7 @@ def main():
             sys.exit()
 
     description_to_find = "R3nSkin DLL Injector"
-    found_file = find_file_by_description(description_to_find)
+    found_file = find_file_by_description(description_to_find, lol_directory)
 
     if not found_file:
         # Les fichiers n'existent pas, exécutez le script
@@ -202,7 +238,7 @@ def is_admin():
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
         return False
-
+    
 def run_as_admin():
     if not is_admin():
         try:
