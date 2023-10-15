@@ -36,7 +36,9 @@ def main():
                             chemin_riot_games = os.path.join(dossier_racine, "Riot Games")
                             dossier_league_of_legends = os.path.join(chemin_riot_games, "League of Legends")
                             if os.path.exists(dossier_league_of_legends):
-                                return dossier_league_of_legends
+                                fichier_league_client = os.path.join(dossier_league_of_legends, "LeagueClient.exe")
+                                if os.path.exists(fichier_league_client):
+                                    return dossier_league_of_legends
         else:
             path_lol = input("Please enter the path to the 'League of Legends' folder : ")
 
