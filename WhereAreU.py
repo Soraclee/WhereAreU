@@ -26,7 +26,7 @@ def main():
         
         user_preference = input("Do you want to search for the 'League of Legends' folder on all disks automatically? (This technique may take some time - 2~3min) (Y/N) : ")
 
-        if user_preference == "O" or user_preference == "o" or user_preference == "":
+        if user_preference == "Y" or user_preference == "y" or user_preference == "":
             available_disks = get_all_disks()
             for disque in available_disks:
                 print("Search for the 'League of Legends' folder from 'Riot Games' on disk : " + disque)
