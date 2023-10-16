@@ -1,7 +1,13 @@
 <div align="center">
-<img src="https://img.shields.io/badge/Language-Python-green" />
-<img src="https://img.shields.io/badge/Game-League_of_Legends-6373ce" />
-<img src="https://img.shields.io/badge/Platform-Windows-blue" />
+<img src="https://img.shields.io/badge/Status-Working-brightgreen?style=for-the-badge" />
+<img src="https://img.shields.io/github/v/release/soraclee/WhereAreU?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Language-Python-green?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Game-League_of_Legends-6373ce?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge" />
+<img src="https://img.shields.io/github/release-date/soraclee/WhereAreU?style=for-the-badge" />
+<img src="https://img.shields.io/github/downloads/soraclee/WhereAreU/total?style=for-the-badge" />
+
+
 
 # **WhereAreU**
 ## **Always have R3nzSkin available**
