@@ -14,33 +14,47 @@ def main():
     repo_owner = "R3nzTheCodeGOD"
     repo_name = "R3nzSkin"
     settings_file = "settings_wau.json"
-    settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True, "version": "1.0.0" }
+    settings_json_default = { 
+        "lol_directory": "C:\\Riot Games\\League of Legends",
+        "first_time": True,
+        "version": "1.0.0",
+        "versionWhereAreU": "1.0.0"
+    }
 
+    current_script = sys.argv[0]
+
+    if "WhereAreU.exe" in current_script:
+        if "updated" not in sys.argv:
+            print("Start AutoUpdate.exe...")
+            if os.path.exists("AutoUpdate.exe"):
+                os.startfile("AutoUpdate.exe")
+                sys.exit()
+    
     def find_league_of_legends_on_all_disks():
         def get_all_disks():
-            disques = []
+            drives = []
             partitions = psutil.disk_partitions(all=False)
             for partition in partitions:
-                disques.append(partition.device)
-            return disques
-        
+                drives.append(partition.device)
+            return drives
+
         user_preference = input("Do you want to search for the 'League of Legends' folder on all disks automatically? (This technique may take some time - 2~3min) (Y/N) : ")
 
-        if user_preference == "Y" or user_preference == "y" or user_preference == "":
+        if user_preference.lower() in ["y", "yes", ""]:
             available_disks = get_all_disks()
-            for disque in available_disks:
-                print("Search for the 'League of Legends' folder from 'Riot Games' on disk : " + disque)
-                if os.path.exists(disque):
-                    for dossier_racine, sous_repertoires, fichiers in os.walk(disque):
-                        if "Riot Games" in sous_repertoires:
-                            chemin_riot_games = os.path.join(dossier_racine, "Riot Games")
-                            dossier_league_of_legends = os.path.join(chemin_riot_games, "League of Legends")
-                            if os.path.exists(dossier_league_of_legends):
-                                fichier_league_client = os.path.join(dossier_league_of_legends, "LeagueClient.exe")
-                                if os.path.exists(fichier_league_client):
-                                    return dossier_league_of_legends
+            for drive in available_disks:
+                print("Searching for the 'League of Legends' folder from 'Riot Games' on drive: " + drive)
+                if os.path.exists(drive):
+                    for root_folder, sub_folders, files in os.walk(drive):
+                        if "Riot Games" in sub_folders:
+                            riot_games_path = os.path.join(root_folder, "Riot Games")
+                            league_of_legends_folder = os.path.join(riot_games_path, "League of Legends")
+                            if os.path.exists(league_of_legends_folder):
+                                league_client_path = os.path.join(league_of_legends_folder, "LeagueClient.exe")
+                                if os.path.exists(league_client_path):
+                                    return league_of_legends_folder
         else:
-            path_lol = input("Please enter the path to the 'League of Legends' folder : ")
+            path_lol = input("Please enter the path to the 'League of Legends' folder: ")
 
             if os.path.exists(path_lol):
                 return path_lol
@@ -60,13 +74,13 @@ def main():
                     settings_json_default["lol_directory"] = current_directory
                     settings_json_default["first_time"] = False
                     with open(settings_file, "w") as f:
-                        json.dump(settings_json_default, f)
+                        json.dump(settings_json_default, f, indent=4)
 
         else:
             print(f"The file '{settings_file}' does not exist.")
             print("File creation...")
             with open(settings_file, "w") as f:
-                json.dump(settings_json_default, f)
+                json.dump(settings_json_default, f, indent=4)
             print(f"The file '{settings_file}' has been created.")
             league_of_legends_path = find_league_of_legends_on_all_disks()
             current_directory = league_of_legends_path
@@ -74,7 +88,7 @@ def main():
             settings_json_default["lol_directory"] = current_directory
             settings_json_default["first_time"] = False
             with open(settings_file, "w") as f:
-                json.dump(settings_json_default, f)
+                json.dump(settings_json_default, f, indent=4)
 
     checkSettings()
 
@@ -104,10 +118,8 @@ def main():
                     with open(settings_file, "w") as f:
                         # Modifier la version dans settings_wau.json
                         print("Change version in settings_wau.json by the new version")
-                        json.dump(settings_json, f)
+                        json.dump(settings_json, f, indent=4)
                     return True
-        
-            
         else:
             print("Unable to retrieve information from the latest version.")
         

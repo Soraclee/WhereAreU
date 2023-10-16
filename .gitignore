@@ -1,3 +1,5 @@
 dist
 build
 WhereAreU.spec
+AutoUpdate.spec
+build.py
