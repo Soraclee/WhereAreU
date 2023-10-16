@@ -14,8 +14,22 @@ def main():
     repo_owner = "R3nzTheCodeGOD"
     repo_name = "R3nzSkin"
     settings_file = "settings_wau.json"
-    settings_json_default = { "lol_directory": "C:\\Riot Games\\League of Legends", "first_time": True, "version": "1.0.0" }
+    settings_json_default = { 
+        "lol_directory": "C:\\Riot Games\\League of Legends",
+        "first_time": True,
+        "version": "1.0.0",
+        "versionWhereAreU": "1.0.0"
+    }
 
+    current_script = sys.argv[0]
+
+    if "WhereAreU.exe" in current_script:
+        # Start AutoUpdate.exe
+        print("Start AutoUpdate.exe...")
+        if os.path.exists("AutoUpdate.exe"):
+            os.startfile("AutoUpdate.exe")
+            sys.exit()
+    
     def find_league_of_legends_on_all_disks():
         def get_all_disks():
             disques = []
@@ -24,7 +38,7 @@ def main():
                 disques.append(partition.device)
             return disques
         
-        user_preference = input("Do you want to search for the 'League of Legends' folder on all disks automatically? (This technique may take some time - 2~3min) (Y/N) : ")
+        user_preference = input("Doeeeeeeeee you want to search for the 'League of Legends' folder on all disks automatically? (This technique may take some time - 2~3min) (Y/N) : ")
 
         if user_preference == "Y" or user_preference == "y" or user_preference == "":
             available_disks = get_all_disks()
@@ -60,13 +74,13 @@ def main():
                     settings_json_default["lol_directory"] = current_directory
                     settings_json_default["first_time"] = False
                     with open(settings_file, "w") as f:
-                        json.dump(settings_json_default, f)
+                        json.dump(settings_json_default, f, indent=4)
 
         else:
             print(f"The file '{settings_file}' does not exist.")
             print("File creation...")
             with open(settings_file, "w") as f:
-                json.dump(settings_json_default, f)
+                json.dump(settings_json_default, f, indent=4)
             print(f"The file '{settings_file}' has been created.")
             league_of_legends_path = find_league_of_legends_on_all_disks()
             current_directory = league_of_legends_path
@@ -74,7 +88,7 @@ def main():
             settings_json_default["lol_directory"] = current_directory
             settings_json_default["first_time"] = False
             with open(settings_file, "w") as f:
-                json.dump(settings_json_default, f)
+                json.dump(settings_json_default, f, indent=4)
 
     checkSettings()
 
@@ -104,10 +118,8 @@ def main():
                     with open(settings_file, "w") as f:
                         # Modifier la version dans settings_wau.json
                         print("Change version in settings_wau.json by the new version")
-                        json.dump(settings_json, f)
+                        json.dump(settings_json, f, indent=4)
                     return True
-        
-            
         else:
             print("Unable to retrieve information from the latest version.")
         
