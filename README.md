@@ -18,7 +18,7 @@ Why did we make this program? Simply because R3nzSkin isn't always available and
 </div>
 
 # Steps
-- Pensez à desactiver la protection en temps réel de votre antivirus avant de télécharger WhereAreU pour éviter qu'il ne supprime le fichier. (Ne vous inquiéter pas vous pouvez le réactiver après l'installation)
+- Remember to disable your antivirus's real-time protection before downloading WhereAreU to prevent it from deleting the file (don't worry, you can reactivate it after installation).
 - Download the latest version of [WhereAreU](https://github.com/Soraclee/WhereAreU/releases/latest)
 - Extract WhereAreU.exe and AutoUpdate.exe into a folder anywhere you like, it's important to put it in a folder as it will create a settings file.
 - Create a shortcut to WhereAreU.exe on your desktop
