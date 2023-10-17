@@ -17,7 +17,7 @@ WhereAreU is a simple program that checks whether R3nzSkin is still available an
 Why did we make this program? Simply because R3nzSkin isn't always available and I don't feel like downloading it manually every time. What's more, there's no automatic update system. So this program is there to make up for these problems.
 </div>
 
-Steps :
+# Steps
 - Pensez à desactiver la protection en temps réel de votre antivirus avant de télécharger WhereAreU pour éviter qu'il ne supprime le fichier. (Ne vous inquiéter pas vous pouvez le réactiver après l'installation)
 - Download the latest version of [WhereAreU](https://github.com/Soraclee/WhereAreU/releases/latest)
 - Extract WhereAreU.exe and AutoUpdate.exe into a folder anywhere you like, it's important to put it in a folder as it will create a settings file.
