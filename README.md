@@ -25,3 +25,7 @@ Steps :
 - Launch the shortcut
 - Add R3nzSkin.exe, R3nzSkin.dll located in League of Legends folder and Riot Games folder to your antivirus exception list, otherwise your antivirus may delete R3nzSkin.exe and R3nzSkin.dll. This way your PC will not consider R3nzSkin as a virus.
 - Enjoy!
+
+# Credits
+
+This program is an improved and updated version of the <a href="https://github.com/R3nzTheCodeGOD">R3nzTheCodeGOD</a>/<a href="https://github.com/R3nzTheCodeGOD/R3nzSkin">R3nzSkin</a> project.
