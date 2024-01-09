@@ -7,17 +7,20 @@
 <img src="https://img.shields.io/github/release-date/soraclee/WhereAreU?style=for-the-badge" />
 <img src="https://img.shields.io/github/downloads/soraclee/WhereAreU/total?style=for-the-badge" />
 
-
-
 # **WhereAreU**
+
 ## **Always have R3nzSkin available**
+
+### **⚠️WhereAreU is currently under maintenance due to Riot's upcoming new integrations with their anti-cheat Vanguard. At the moment, we don't know how Vanguard will behave on League of Legends, so we've decided to take WhereAreU offline to prevent you from being unnecessarily banned because of Vanguard.⚠️**
 
 WhereAreU is a simple program that checks whether R3nzSkin is still available and, if not, downloads and installs it. It then launches it. It will always use the latest version of R3nzSkin.
 
 Why did we make this program? Simply because R3nzSkin isn't always available and I don't feel like downloading it manually every time. What's more, there's no automatic update system. So this program is there to make up for these problems.
+
 </div>
 
 # Steps
+
 - Remember to disable your antivirus's real-time protection before downloading WhereAreU to prevent it from deleting the file (don't worry, you can reactivate it after installation).
 - Download the latest version of [WhereAreU](https://github.com/Soraclee/WhereAreU/releases/latest)
 - Extract WhereAreU.exe and AutoUpdate.exe into a folder anywhere you like, it's important to put it in a folder as it will create a settings file.
