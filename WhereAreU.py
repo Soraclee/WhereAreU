@@ -11,6 +11,14 @@ import time
 
 def main():
     # Définir le nom du référentiel
+    maintenance = True
+
+    if maintenance:
+        print("The script is currently in maintenance.")
+        print("Please try again later.")
+        input("Press Enter to exit...")
+        sys.exit()
+
     repo_owner = "R3nzTheCodeGOD"
     repo_name = "R3nzSkin"
     settings_file = "settings_wau.json"
