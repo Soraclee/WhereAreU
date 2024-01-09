@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://img.shields.io/badge/Status-Working-brightgreen?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Status-NOT%20WORKING-d21f3c?style=for-the-badge" />
 <img src="https://img.shields.io/github/v/release/soraclee/WhereAreU?style=for-the-badge" />
 <img src="https://img.shields.io/badge/Language-Python-green?style=for-the-badge" />
 <img src="https://img.shields.io/badge/Game-League_of_Legends-6373ce?style=for-the-badge" />
